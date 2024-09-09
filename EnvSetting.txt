@@ -1,0 +1,30 @@
+OS: Windows 11 Professional
+GPU: RTX 4070 super
+Cuda: 11.8
+
+Env: Anaconda
+
+    Create Env:
+
+        conda create --name ProjectEnv python=3.9 --yes
+
+    Package Install:
+        conda install jupyter --yes
+        conda install tqdm --yes
+        conda install matplotlib --yes
+        conda install flask --yes
+        conda install -c conda-forge librosa --yes
+        conda install pytorch pytorch-cuda=11.8 -c pytorch -c nvidia --yes
+        pip install tensorflow==2.10.1 numpy scipy pandas matplotlib
+
+Env: Pycharm .venv
+    Python: 3.9
+    Package install:
+	pip install tqdm
+        pip install librosa
+        pip install tensorflow==2.10.1 numpy scipy pandas matplotlib
+        pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+        pip install beautifulsoup4
+
+
+
