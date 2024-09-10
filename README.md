@@ -1,2 +1,2 @@
 # GraduationProject
-SCU Graduation Ptoject
+SCU CSIM Graduation Project
