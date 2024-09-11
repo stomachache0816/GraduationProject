@@ -4,6 +4,9 @@ import os
 app = Flask(__name__)
 
 UPLOAD_FOLDER = f"{os.getcwd()}\\app_voice\\"
+if not os.path.isdir(UPLOAD_FOLDER):
+    os.mkdir(UPLOAD_FOLDER)
+
 host_ip = "192.168.1.111"
 host_port = 5000
 
