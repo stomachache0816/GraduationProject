@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="ProjectEnv2" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (GraduationProject)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (GraduationProjectVenv)" project-jdk-type="Python SDK" />
 </project>
