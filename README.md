@@ -50,10 +50,12 @@ pip install lxml
 ### [wav2mfcc.ipynb](wav2mfcc.ipynb)
 分別將資料夾[audio](audio)和[record](record)內的wav檔轉換成npy檔放進資料夾[mfcc](mfcc)
 
-### [train_cnn_model.ipynb](train_cnn_model.ipynb)
-訓練一組參數的單音CNN分類模型
-使用[best_params.json](best_params.json)檔案內的最佳超參數並輸出模型[cnn_model.h5](cnn_model.h5)
-
 ### [get_best_parms.py](get_best_parms.py)
 使用網格搜索尋找單音CNN分類模型的最佳超參數並輸出[best_params.json](best_params.json)
 
+### [best_parms.json](best_parms.json)
+如[get_best_parms.py](get_best_parms.py)所述 紀錄最佳超參數
+
+### [train_cnn_model.ipynb](train_cnn_model.ipynb)
+訓練一組參數的單音CNN分類模型
+使用[best_params.json](best_params.json)檔案內的最佳超參數並輸出模型[cnn_model.h5](cnn_model.h5)
