@@ -1,5 +1,6 @@
 import platform
 import os
+import csv
 import scipy
 import numpy as np
 from glob import glob
@@ -129,18 +130,37 @@ X_train = X_train.reshape(X_train.shape[0], mfcc_dim_1, mfcc_dim_2, channel)
 X_test = X_test.reshape(X_test.shape[0], mfcc_dim_1, mfcc_dim_2, channel)
 
 # 超參數
-learning_rate_range = [0.01, 0.001, 0.0001, 0.00001]
-num_filters_range = [32, 64, 128]  # 調整每層卷積層的過濾器數量
-dense_units_range = [256, 512]  # 調整全連接層神經元數量
-batch_size_range = [32, 64, 128]  # 調整批次大小
-epochs_range = [100, 200, 300]  # 調整訓練輪數
+learning_rate_range = [1e-2, 1e-3, 1e-4, 1e-5]  # 學習率
+num_filters_range = [32, 64, 128]  # 卷積層數量
+dense_units_range = [256, 512]  # 全連接層數量
+batch_size_range = [32, 64, 128]  # 批次大小
+epochs_range = [200, 300, 500]  # 訓練輪數
+
+params_names = [
+    "data_amount",
+    "learning_rate",
+    "num_filters",
+    "dense_unit",
+    "batch_size",
+    "epochs",
+    "accuracy"
+]
 
 # 網格搜尋
+folder = f"{os.getcwd()}\\hyper_parameters_record\\"
+if not os.path.isdir(folder):
+    os.mkdir(folder)
+
+record_file_name = f"{os.getcwd()}\\hyper_parameters_record\\hyper_params_{mfcc_list.shape[0]}.csv"
+with open(file=record_file_name, mode="a", newline="") as file:
+    writer = csv.DictWriter(file, fieldnames=params_names)
+    writer.writeheader()
+
 accuracies = []
 
 max_accuracy: float = 0
 best_params: dict = {}
-for learning_rate in tqdm(learning_rate_range):
+for learning_rate in learning_rate_range:
     for num_filters in num_filters_range:
         for dense_unit in dense_units_range:
             for batch_size in batch_size_range:
@@ -152,22 +172,30 @@ for learning_rate in tqdm(learning_rate_range):
                         num_filters=num_filters,
                         dense_units=dense_unit,
                     )
-                    # print(f"learning_rate: {learning_rate}, num_filters: {num_filters}, dense_units: {dense_unit}, batch_size: {batch_size}, epochs: {epochs}", end="\r")
+
                     model_train_info = model.fit(X_train, y_train, batch_size=batch_size, epochs=epochs, verbose=verbose, validation_data=(X_test, y_test))
 
                     val_accuracies = model_train_info.history['val_accuracy']
                     current_max_accuracy = max(val_accuracies)
                     accuracies.append(current_max_accuracy)
 
+                    parameters = {
+                        "data_amount": mfcc_list.shape[0],
+                        "learning_rate": learning_rate,
+                        "num_filters": num_filters,
+                        "dense_unit": dense_unit,
+                        "batch_size": batch_size,
+                        "epochs": epochs,
+                        "accuracy": current_max_accuracy
+                    }
+
+                    with open(file=record_file_name, mode="a", newline="") as file:
+                        writer = csv.DictWriter(file, fieldnames=parameters.keys())
+                        writer.writerow(parameters)
+
                     if current_max_accuracy > max_accuracy:
                         max_accuracy = current_max_accuracy
-                        best_params = {
-                            "learning_rate": learning_rate,
-                            "num_filters": num_filters,
-                            "dense_unit": dense_unit,
-                            "batch_size": batch_size,
-                            "epochs": epochs,
-                        }
+                        best_params = parameters
 
 print(max_accuracy)
 print(best_params)
