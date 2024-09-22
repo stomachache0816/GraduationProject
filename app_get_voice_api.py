@@ -7,7 +7,7 @@ UPLOAD_FOLDER = f"{os.getcwd()}\\app_voice\\"
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
-host_ip = "192.168.1.111"
+host_ip = "127.0.0.1"
 host_port = 5000
 
 @app.route('/voice', methods=['POST'])

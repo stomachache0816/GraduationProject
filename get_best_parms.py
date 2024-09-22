@@ -5,6 +5,7 @@ import scipy
 import numpy as np
 from glob import glob
 from tqdm import tqdm
+import requests
 import json
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
@@ -203,3 +204,10 @@ print(best_params)
 best_params["max_accuracy"] = max_accuracy
 with open(f"{os.getcwd()}\\best_params.json", "w") as json_file:
     json.dump(best_params, json_file)
+
+# DISCORD -> 伺服器設定 -> 整合 -> Webhook -> 新 Webhook > -> 複製 Webhook 網址
+DISCORD_WEBHOOK_URL = ""
+requests.post(
+    url=DISCORD_WEBHOOK_URL,
+    data={"content": "超參數尋找已完成!"}
+)
