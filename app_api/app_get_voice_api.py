@@ -3,7 +3,7 @@ import os
 
 app = Flask(__name__)
 
-UPLOAD_FOLDER = f"{os.getcwd()}\\app_voice\\"
+UPLOAD_FOLDER = f".\\app_voice\\"
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
