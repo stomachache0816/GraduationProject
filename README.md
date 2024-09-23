@@ -1,12 +1,17 @@
-# 東吳大學 資訊管理學系 110級 畢業專題
+# Graduation Project
+110  
+Department of Computer Science and Information Management  
+Soochow University
 
-## 環境佈署
+## Environment Setting
 
 ### OS
 Windows 11 Professional
 
 ### GPU
-NVIDIA GeForce RTX 4070 SUPER
+NVIDIA GeForce RTX 4090(Grid_Search)  
+
+NVIDIA GeForce RTX 4070 SUPER(Test)
 
 ### CUDA Version
 11.8
@@ -20,15 +25,15 @@ Pycharm
 3.9
 
 #### Environment Type
-.venv in Pycharm(Recommend)
+.venv in Pycharm (Recommend)
 
-#### Package Installation(Automatic)
+#### Package Installation (Automatic)
 *path of requirements.txt
 ```angular2html
 pip install -r requirements.txt
 ```
 
-#### Package Installation(Manual)
+#### Package Installation (Manual)
 ```angular2html
 pip install librosa
 ```
