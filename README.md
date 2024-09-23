@@ -16,6 +16,9 @@ NVIDIA GeForce RTX 4070 SUPER (Testing)
 ### CUDA Version
 11.8
 
+### CUDNN Version
+8.9.7.29_cuda11
+
 ### IDE
 Pycharm
 
