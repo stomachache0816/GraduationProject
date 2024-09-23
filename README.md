@@ -9,9 +9,9 @@ Soochow University
 Windows 11 Professional
 
 ### GPU
-NVIDIA GeForce RTX 4090(Grid_Search)  
+NVIDIA GeForce RTX 4090 (Training)  
 
-NVIDIA GeForce RTX 4070 SUPER(Test)
+NVIDIA GeForce RTX 4070 SUPER (Testing)
 
 ### CUDA Version
 11.8
