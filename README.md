@@ -60,21 +60,24 @@ pip install lxml
 ```
 
 ## 檔案解釋
-### [audio](.\\data\\audio)資料夾
+### [audio](https://github.com/stomachache0816/GraduationProject/tree/main/data/audio)資料夾
 將Youtube蒐集來的切割音訊的wav音檔放到此處
 
-### [record](.\\data\\record)資料夾
+### [record](https://github.com/stomachache0816/GraduationProject/tree/main/data/record)資料夾
 將教育部示範拼音和自己錄的聲音的wav音檔放到此處
 
-### [wav2mfcc.ipynb](.\\wav2mfcc.ipynb)
-分別將資料夾[audio](.\\data\\audio)和[record](.\\data\\record)內的wav檔轉換成npy檔放進資料夾[mfcc](.\\data\\mfcc)
+### [wav2mfcc.ipynb](https://github.com/stomachache0816/GraduationProject/blob/main/wav2mfcc.ipynb)
+分別將資料夾[audio](https://github.com/stomachache0816/GraduationProject/tree/main/data/audio)和
+[record](https://github.com/stomachache0816/GraduationProject/tree/main/data/record)內的
+wav檔轉換成npy檔放進資料夾[mfcc](https://github.com/stomachache0816/GraduationProject/tree/main/data/mfcc)
 
-### [get_best_params.py](.\\grid_search\\get_best_params.py)
-使用網格搜索尋找單音CNN分類模型的最佳超參數並輸出[best_params.json](.\\grid_search\\best_params.json)
+### [get_best_params.py](https://github.com/stomachache0816/GraduationProject/blob/main/grid_search/get_best_params.py)
+使用網格搜索尋找單音CNN分類模型的最佳超參數並輸出[best_params.json](https://github.com/stomachache0816/GraduationProject/blob/main/grid_search/best_params.json)
 
-### [best_params.json](.\\grid_search\\best_params.json)
-如[get_best_params.py](.\\grid_search\\get_best_params.py)所述 紀錄最佳超參數
+### [best_params.json](https://github.com/stomachache0816/GraduationProject/blob/main/grid_search/best_params.json)
+如[get_best_params.py](https://github.com/stomachache0816/GraduationProject/blob/main/grid_search/get_best_params.py)所述 紀錄最佳超參數
 
-### [train_cnn_model.ipynb](.\\train_cnn\\train_cnn_model.ipynb)
+### [train_cnn_model.ipynb](https://github.com/stomachache0816/GraduationProject/blob/main/train_cnn/train_cnn_model.ipynb)
 訓練一組參數的單音CNN分類模型
-使用[best_params.json](.\\grid_search\\best_params.json)檔案內的最佳超參數並輸出模型[cnn_model.h5](.\\train_cnn\\cnn_model.h5)
+使用[best_params.json](https://github.com/stomachache0816/GraduationProject/blob/main/grid_search/best_params.json)檔案內的
+最佳超參數並輸出模型[cnn_model.h5](https://github.com/stomachache0816/GraduationProject/blob/main/train_cnn/cnn_model.h5)
