@@ -31,7 +31,7 @@ Pycharm
 .venv in Pycharm (Recommend)
 
 #### Package Installation (Automatic)
-*path of [requirements.txt](requirements.txt)
+*path of [requirements.txt](.\\requirements.txt)
 ```angular2html
 pip install -r requirements.txt
 ```
@@ -60,7 +60,7 @@ pip install lxml
 ```
 
 ## 檔案解釋
-### [audio](data\\audio)資料夾
+### [audio](.\\data\\audio)資料夾
 將Youtube蒐集來的切割音訊的wav音檔放到此處
 
 ### [record](.\\data\\record)資料夾
