@@ -1,5 +1,5 @@
 # Graduation Project
-110  
+110th  
 Department of Computer Science and Information Management  
 Soochow University
 
