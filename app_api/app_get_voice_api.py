@@ -7,10 +7,10 @@ UPLOAD_FOLDER = f".\\app_voice\\"
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
-host_ip = "127.0.0.1"
+host_ip = "192.168.1.111"
 host_port = 5000
 
-@app.route('/voice', methods=['POST'])
+@app.route('/app_voice', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
         return jsonify({'error': 'No file part'}), 400
@@ -22,7 +22,12 @@ def upload_file():
     file_path = os.path.join(UPLOAD_FOLDER, file.filename)
     file.save(file_path)
 
-    return jsonify({'message': 'File uploaded successfully', 'file_path': file_path}), 200
+    result = {
+        'message': 'File uploaded successfully',
+        'file_path': file_path
+    }
+
+    return jsonify(result), 200
 
 
 app.run(debug=True, host=host_ip, port=host_port)
