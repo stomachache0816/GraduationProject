@@ -346,7 +346,7 @@ class _RecordingPageState extends State<RecordingPage> {
   // 停止錄音
   Future<void> _stopRecording() async {
     await _recorder!.stopRecorder();
-    uploadAudioFile(_filePath);
+    var result = uploadAudioFile(_filePath);
   }
 
   @override
