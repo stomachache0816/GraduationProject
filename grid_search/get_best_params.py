@@ -21,28 +21,35 @@ print(f"scipy.__version__: {scipy.__version__}")
 print(f"tf.__version__: {tf.__version__}")
 print(f"tf.config.list_physical_devices('GPU'): {tf.config.list_physical_devices('GPU')}")
 
-npy_file_list = glob(f"..\\data\\mfcc\\*.npy")
+npy_file_path_list: list = glob(f"..\\data\\mfccEduVer\\*.npy")
 
-mfcc_list = []
-for npy_file in tqdm(npy_file_list):
-    mfcc = np.load(file=npy_file)
-    mfcc_list.append(mfcc)
-mfcc_list = np.array(mfcc_list)
+mfcc_matrix_list = list()
+for npy_file_path in tqdm(npy_file_path_list):
+    mfcc_matrix = np.load(file=npy_file_path)
+    mfcc_matrix_list.append(mfcc_matrix)
+mfcc_matrix_list = np.array(mfcc_matrix_list)
 
 scaler = StandardScaler()
-scaler.fit(mfcc_list.reshape((mfcc_list.shape[0] * mfcc_list.shape[1], mfcc_list.shape[2])))
-mfcc_list_scaled = []
-for mfcc in mfcc_list:
-    mfcc_list_scaled.append(scaler.transform(mfcc))
-mfcc_list_scaled = np.array(mfcc_list_scaled)
+# 因為標準器只能fit 2維的資料所以要將3維的mfcc資料集reshape成2維
+# mfcc_data_nums: k
+# mfcc_row: n
+# mfcc_column: m
+# (k, n, m) => (k * n, m)
+scaler.fit(mfcc_matrix_list.reshape((mfcc_matrix_list.shape[0] * mfcc_matrix_list.shape[1], mfcc_matrix_list.shape[2])))
+mfcc_matrix_list_scaled = []
+for mfcc in mfcc_matrix_list:
+    mfcc_matrix_list_scaled.append(scaler.transform(mfcc))
+# 將list()轉換成np.array()
+mfcc_matrix_list_scaled = np.array(mfcc_matrix_list_scaled)
 
 label_pinyin_list = []
-for npy_file in npy_file_list:
-    label_pinyin = npy_file[npy_file.find("_") + 1:npy_file.find(".npy")]
+for npy_file_path in npy_file_path_list:
+    label_pinyin = npy_file_path.split("_")[1]
     label_pinyin_list.append(label_pinyin)
+# 將list()轉換成np.array()
 label_pinyin_list = np.array(label_pinyin_list)
 
-sample_list = glob(f"..\\data\\samplePinyin\\Male\\*.wav")
+sample_list = glob(f"..\\data\\samplePinyinEdu\\Male\\*.wav")
 label_dic: dict = {}
 for i in range(len(sample_list)):
     label = sample_list[i][sample_list[i].find("_") + 1:sample_list[i].find(".wav")]
@@ -117,12 +124,15 @@ channel = 1
 verbose = 2
 num_classes = len(label_dic)
 test_size = 0.2
-mfcc_dim_1 = mfcc_list.shape[1]
-mfcc_dim_2 = mfcc_list.shape[2]
+mfcc_dim_1 = mfcc_matrix_list.shape[1]
+mfcc_dim_2 = mfcc_matrix_list.shape[2]
+print(f"mfcc_dim_1: {mfcc_dim_1}")
+print(f"mfcc_dim_2: {mfcc_dim_2}")
 
-X = mfcc_list_scaled
+X = mfcc_matrix_list_scaled
 y = label_int_list
 
+# 將int label轉換成二進制one hot標籤
 y_one_hot = to_categorical(y, num_classes=num_classes)
 
 X_train, X_test, y_train, y_test = train_test_split(X, y_one_hot, test_size=test_size, random_state=42)
@@ -152,7 +162,7 @@ folder = f".\\hyper_parameters_record\\"
 if not os.path.isdir(folder):
     os.mkdir(folder)
 
-record_file_name = f".\\hyper_params_{mfcc_list.shape[0]}.csv"
+record_file_name = f".\\hyper_params_{mfcc_matrix_list.shape[0]}.csv"
 with open(file=record_file_name, mode="a", newline="") as file:
     writer = csv.DictWriter(file, fieldnames=params_names)
     writer.writeheader()
@@ -181,7 +191,7 @@ for learning_rate in learning_rate_range:
                     accuracies.append(current_max_accuracy)
 
                     parameters = {
-                        "data_amount": mfcc_list.shape[0],
+                        "data_amount": mfcc_matrix_list.shape[0],
                         "learning_rate": learning_rate,
                         "num_filters": num_filters,
                         "dense_unit": dense_unit,
