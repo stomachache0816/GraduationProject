@@ -215,8 +215,8 @@ best_params["max_accuracy"] = max_accuracy
 with open(f".\\best_params.json", "w") as json_file:
     json.dump(best_params, json_file)
 
-# DISCORD -> 伺服器設定 -> 整合 -> Webhook -> 新 Webhook > -> 複製 Webhook 網址
-DISCORD_WEBHOOK_URL = ""
+# DISCORD -> 設定 -> 整合 -> Webhook -> 新 Webhook > -> 複製 Webhook 網址
+DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1287413088970346557/30gx7NdIfSxS1BRWk28IRkOHJeoET-ihIN_KAjYeXYkrpPeI0hBnE-68AHzhpTR4h3et"
 requests.post(
     url=DISCORD_WEBHOOK_URL,
     data={"content": "超參數尋找已完成!"}
