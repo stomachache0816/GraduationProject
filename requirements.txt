@@ -1,5 +1,7 @@
 librosa==0.10.2.post1
 tensorflow==2.10.1
+keras==2.10.0
+scikit-learn==1.5.2
 numpy==1.22.4
 scipy==1.7.3
 pandas==2.2.2
