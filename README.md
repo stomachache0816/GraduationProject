@@ -50,6 +50,9 @@ pip3 install torch torchvision torchaudio --index-url https://download.pytorch.o
 pip install tqdm
 ```
 ```angular2html
+pip install requests
+```
+```angular2html
 pip install flask
 ```
 ```angular2html

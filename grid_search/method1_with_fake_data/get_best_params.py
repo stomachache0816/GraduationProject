@@ -162,7 +162,7 @@ folder = f".\\hyper_parameters_record\\"
 if not os.path.isdir(folder):
     os.mkdir(folder)
 
-record_file_name = f".\\hyper_params_{mfcc_matrix_list.shape[0]}.csv"
+record_file_name = f".\\hyper_parameters_record\\hyper_params_{mfcc_matrix_list.shape[0]}.csv"
 with open(file=record_file_name, mode="a", newline="") as file:
     writer = csv.DictWriter(file, fieldnames=params_names)
     writer.writeheader()

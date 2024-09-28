@@ -141,7 +141,7 @@ X_train = X_train.reshape(X_train.shape[0], mfcc_dim_1, mfcc_dim_2, channel)
 X_test = X_test.reshape(X_test.shape[0], mfcc_dim_1, mfcc_dim_2, channel)
 
 # 超參數
-learning_rate_range = [1e-2, 1e-3, 1e-4, 1e-5]  # 學習率
+learning_rate_range = [1e-3, 1e-4, 1e-5]  # 學習率
 num_filters_range = [32, 64, 128]  # 卷積層數量
 dense_units_range = [256, 512]  # 全連接層數量
 batch_size_range = [32, 64, 128]  # 批次大小
@@ -162,7 +162,7 @@ folder = f".\\hyper_parameters_record\\"
 if not os.path.isdir(folder):
     os.mkdir(folder)
 
-record_file_name = f".\\hyper_params_{mfcc_matrix_list.shape[0]}.csv"
+record_file_name = f".\\hyper_parameters_record\\hyper_params_{mfcc_matrix_list.shape[0]}.csv"
 with open(file=record_file_name, mode="a", newline="") as file:
     writer = csv.DictWriter(file, fieldnames=params_names)
     writer.writeheader()
