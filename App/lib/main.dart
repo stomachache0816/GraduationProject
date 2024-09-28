@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:index/IntroPage.dart';
 import 'SettingPage.dart';
 import 'ResultPage.dart';
 import 'HistoryPage.dart';
@@ -7,7 +8,6 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 import 'voice_API.dart';
-
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue),
       debugShowCheckedModeBanner: false, //移掉debug旗幟
-      home: const HomePage(), //開始畫面
+      home: const IntroPage(), //開始畫面
     );
   }
 }
@@ -55,28 +55,6 @@ class _HomePageState extends State<HomePage> {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Padding(
-                  padding: EdgeInsets.only(top: 50.0), // 調整位置
-                  child: Text(
-                    '歡迎使用!',
-                    style: TextStyle(fontSize: 48, color: Colors.black),
-                  ),
-                ),
-                const Padding(
-                  padding: EdgeInsets.only(top: 40.0), // 調整位置
-                  child: Text(
-                    '聽障人士說話矯正系統',
-                    style: TextStyle(fontSize: 28, color: Colors.black),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Image.asset('assets/images/voicelines2.png'), // 圖片路徑，先去yaml新增
-                const Spacer(),
-              ],
             ),
           ),
           bottomNavigationBar: BottomNavigationBar(

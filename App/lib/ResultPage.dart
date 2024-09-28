@@ -17,9 +17,8 @@ class ResultPage extends StatelessWidget {
         ),
         child: Column(
           children: [
-            Image.asset('assets/images/voicelines2.png'),
+            Image.asset('assets/images/sound.png'),
             const SizedBox(height: 20), // 頂部間距
-            // 新增的兩段文字訊息
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
@@ -109,7 +108,7 @@ class ResultPage extends StatelessWidget {
             ),
             // 下方圖片固定在最下方
             const SizedBox(height: 10), // 底部間距
-            Image.asset('assets/images/voicelines2.png'),
+            Image.asset('assets/images/sound.png'),
           ],
         ),
       ),
