@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'IntroPage.dart'; //引導畫面
-import 'MenuPage.dart';
-
+import 'SettingPage.dart';
+import 'ResultPage.dart';
+import 'HistoryPage.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
@@ -21,62 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(primarySwatch: Colors.blue),
       debugShowCheckedModeBanner: false, //移掉debug旗幟
-      home: const FirstPage(), //開始畫面
-    );
-  }
-}
-
-// 開始畫面
-class FirstPage extends StatelessWidget {
-  const FirstPage({super.key});
-
-  void _nextPage(BuildContext context) {
-    Navigator.push(
-      context,
-      _customPageRoute1(IntroPage1(onNext: () {
-        Navigator.push(
-          context,
-          _customPageRoute1(IntroPage2(onNext: () {
-            Navigator.push(
-              context,
-              _customPageRoute1(const IntroPage3()),
-            );
-          })),
-        );
-      })),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('發音矯正系統'),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              '測試畫面-開始使用',
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-          Padding(
-            padding: const EdgeInsets.only(bottom: 16.0),
-            child: ElevatedButton(
-              onPressed: () => _nextPage(context), // 呼叫 _nextPage 函數
-              style: ElevatedButton.styleFrom(
-                foregroundColor: Colors.white,
-                backgroundColor: Colors.blue,
-              ),
-              child: const Text('下一步'),
-            ),
-          ),
-          ],
-        ),
-      ),
+      home: const HomePage(), //開始畫面
     );
   }
 }
@@ -140,31 +85,47 @@ class _HomePageState extends State<HomePage> {
               BottomNavigationBarItem(
                 icon: GestureDetector(
                   onTap: _toggleMenu,
-                  child: const Icon(Icons.menu, color: Colors.black),
+                  child: const Icon(Icons.history, color: Colors.black),
                 ),
-                label: '選單',
+                label: '測驗紀錄',
               ),
               const BottomNavigationBarItem(
                 icon: Icon(Icons.home, color: Colors.black),
                 label: '主畫面',
               ),
               const BottomNavigationBarItem(
-                icon: Icon(Icons.notifications, color: Colors.black),
-                label: '通知',
+                icon: Icon(Icons.settings, color: Colors.black),
+                label: '設定',
               ),
             ],
             currentIndex: 1,
             backgroundColor: const Color(0xFFA1B7CD),
             onTap: (index) {
               switch (index) {
-                case 0: // 選單
-                  _toggleMenu();
+                case 0: // 測驗紀錄
+                  Navigator.of(context).push(PageRouteBuilder(
+                    pageBuilder: (context, animation, secondaryAnimation) => HistoryPage(),
+                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                      const begin = Offset(-1.0, 0.0); // 從右側進入
+                      const end = Offset.zero;
+                      const curve = Curves.easeInOut;
+
+                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                      var offsetAnimation = animation.drive(tween);
+
+                      return SlideTransition(
+                        position: offsetAnimation,
+                        child: child,
+                      );
+                    },
+                   ),
+                  );
                   break;
                 case 1: // 主畫面
                   break;
-                case 2: // 通知
+                case 2: // 設定
                   Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) => const NotificationsPage(),
+                    pageBuilder: (context, animation, secondaryAnimation) => const SettingPage(),
                     transitionsBuilder: (context, animation, secondaryAnimation, child) {
                       const begin = Offset(1.0, 0.0); // 從右側進入
                       const end = Offset.zero;
@@ -178,8 +139,9 @@ class _HomePageState extends State<HomePage> {
                         child: child,
                       );
                     },
-                  ));
-                  break;
+                  )
+                 );
+                break;
               }
             },
           ),
@@ -259,35 +221,6 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
         ),
-            if (_isMenuOpen)
-          AnimatedPositioned(
-            duration: const Duration(milliseconds: 300),
-            left: _isMenuOpen ? 0 : -MediaQuery.of(context).size.width * 0.8,
-            top: 0,
-            bottom: 0,
-            child: GestureDetector(
-              onTap: () {
-                if (_isMenuOpen) _toggleMenu();
-              },
-              child: Stack(
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    color: _isMenuOpen ? Colors.black.withOpacity(0.5) : Colors.transparent,
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      child: DrawerMenu(
-                        onClose: _toggleMenu,
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
       ],
     );
   }
@@ -306,7 +239,7 @@ class _RecordingPageState extends State<RecordingPage> {
   bool _isRecording = false;
   bool _hasStopped = false;
 
-  //飛雷神
+  //串接部分--------------------------------------------------------------------
 
   FlutterSoundRecorder? _recorder;
   String _filePath = '';
@@ -354,27 +287,34 @@ class _RecordingPageState extends State<RecordingPage> {
     _recorder!.closeRecorder();
     _recorder = null;
     super.dispose();
+    setState(() {
+      _hasStopped = true ;
+    });
   }
 
+  // 切換錄製狀態
   void _toggleRecording() {
     setState(() {
-      _isRecording = !_isRecording;
+      if (_isRecording) {
+        // 停止錄製
+        _isRecording = false;
+        _hasStopped = true; // 停止錄製後設置為 true
+        _stopRecording();
+      } else {
+        // 開始錄製
+        _isRecording = true;
+        _hasStopped = false; // 開始錄製時重設為 false
+        _startRecording();
+      }
     });
-
-    if (_isRecording) {
-      _startRecording();
-    }
-    else {
-      _stopRecording();
-    }
   }
 
-  //飛雷神
+  //串接部分-------------------------------------------------------------------
 
-  void _goToNextPage() {
+  void _goToResultPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ResultPage()), // 導向下一頁
+      MaterialPageRoute(builder: (context) => const ResultPage()), // 導向結果
     );
   }
 
@@ -484,7 +424,7 @@ class _RecordingPageState extends State<RecordingPage> {
                 const SizedBox(height: 20), // 按鈕間距
                 if (!_isRecording && _hasStopped) // 只在停止錄製且已按過停止鍵時顯示
                   ElevatedButton(
-                    onPressed: _goToNextPage,
+                    onPressed: _goToResultPage,
                     style: ElevatedButton.styleFrom(
                       minimumSize: const Size(200, 60),
                       textStyle: const TextStyle(fontSize: 24),
@@ -500,188 +440,30 @@ class _RecordingPageState extends State<RecordingPage> {
   }
 }
 
-// 錄音結束後
-
-class ResultPage extends StatelessWidget {
-  const ResultPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Color(0xFFa1c4fd), Color(0xFFc2e9fb)],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Column(
-          children: [
-            Image.asset('assets/images/voicelines2.png'),
-            const SizedBox(height: 20), // 頂部間距
-
-            // 新增的兩段文字訊息
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 20.0),
-              child: Column(
-                children: [
-                  Text(
-                    '根據我們的偵測~', // 第一段文字
-                    style: TextStyle(fontSize: 28, color: Colors.black),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 10), // 兩段文字間距
-                  Text(
-                    '得到的結果為', // 第二段文字
-                    style: TextStyle(fontSize: 28, color: Colors.black),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-
-            const SizedBox(height: 20), // 新增的文字與長方形間距
-
-            Expanded(
-              child: Center(
-                child: Container(
-                  width: 300,
-                  height: 150,
-                  padding: const EdgeInsets.all(20.0),
-                  decoration: BoxDecoration(
-                    color: Colors.white, // 長方形背景顏色
-                    borderRadius: BorderRadius.circular(15.0), // 四角弧度
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.2),
-                        spreadRadius: 2,
-                        blurRadius: 8,
-                        offset: const Offset(0, 4),
-                      ),
-                    ],
-                  ),
-                  child: const Center(
-                    child: Text(
-                      '錄音結果!',
-                      style: TextStyle(fontSize: 18, color: Colors.black),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-
-            // 按鈕區域
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF8CB3FF), // 藍色
-                      minimumSize: const Size(120, 50),
-                      elevation: 4,
-                    ),
-                    child: const Text(
-                      '是',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFFF6F61), // 紅色
-                      minimumSize: const Size(120, 50),
-                      elevation: 4,
-                    ),
-                    child: const Text(
-                      '重新錄製',
-                      style: TextStyle(fontSize: 18, color: Colors.white),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-
-            // 下方圖片固定在最下方
-            const SizedBox(height: 10), // 底部間距
-            Image.asset('assets/images/voicelines2.png'),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('個人檔案'),
-      ),
-      body: const Center(
-        child: Text(
-          '個人檔案畫面',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-class NotificationsPage extends StatelessWidget {
-  const NotificationsPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('通知'),
-      ),
-      body: const Center(
-        child: Text(
-          '通知畫面',
-          style: TextStyle(fontSize: 24),
-        ),
-      ),
-    );
-  }
-}
-
-// 自定義過場動畫(不知道為什麼搬不過去IntroPage，不過沒差)
-PageRouteBuilder _customPageRoute1(Widget page) {
-  return PageRouteBuilder(
-    pageBuilder: (context, animation, secondaryAnimation) => page,
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      const begin = Offset(1.0, 0.0);
-      const end = Offset.zero;
-      const curve = Curves.easeInOut; // 讓過渡效果更平滑
-
-      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-      var offsetAnimation = animation.drive(tween);
-
-      var reverseTween = Tween(begin: Offset.zero, end: const Offset(-1.0, 0.0)).chain(CurveTween(curve: curve));
-      var reverseAnimation = secondaryAnimation.drive(reverseTween);
-
-      return Stack(
-        children: [
-          SlideTransition(position: reverseAnimation, child: child), // 舊頁面向左移動
-          SlideTransition(position: offsetAnimation, child: child), // 新頁面向中間移動
-        ],
-      );
-    },
-    transitionDuration: const Duration(milliseconds: 450), // 調整動畫時間，更加明顯
-  );
-}
+// 自定義過場動畫
+// PageRouteBuilder _customPageRoute1(Widget page) {
+//   return PageRouteBuilder(
+//     pageBuilder: (context, animation, secondaryAnimation) => page,
+//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
+//       const begin = Offset(1.0, 0.0);
+//       const end = Offset.zero;
+//       const curve = Curves.easeInOut; // 讓過渡效果更平滑
+//
+//       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+//       var offsetAnimation = animation.drive(tween);
+//
+//       var reverseTween = Tween(begin: Offset.zero, end: const Offset(-1.0, 0.0)).chain(CurveTween(curve: curve));
+//       var reverseAnimation = secondaryAnimation.drive(reverseTween);
+//
+//       return Stack(
+//         children: [
+//           SlideTransition(position: reverseAnimation, child: child), // 舊頁面向左移動
+//           SlideTransition(position: offsetAnimation, child: child), // 新頁面向中間移動
+//         ],
+//       );
+//     },
+//     transitionDuration: const Duration(milliseconds: 450), // 調整動畫時間，更加明顯
+//   );
+// }
 
 
