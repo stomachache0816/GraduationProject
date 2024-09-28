@@ -35,29 +35,3 @@ Pycharm
 ```angular2html
 pip install -r requirements.txt
 ```
-
-#### Package Installation (Manual)
-```angular2html
-pip install librosa
-```
-```angular2html
-pip install tensorflow==2.10.1 numpy==1.22.4 scipy==1.7.3 pandas matplotlib
-```
-```angular2html
-pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
-```
-```angular2html
-pip install tqdm
-```
-```angular2html
-pip install requests
-```
-```angular2html
-pip install flask
-```
-```angular2html
-pip install beautifulsoup4
-```
-```angular2html
-pip install lxml
-```
