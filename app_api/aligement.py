@@ -129,7 +129,7 @@ for i in range(0,len(sentence)):#len(sentence)-1
         word_start_end.append([pinyin_tone[j][0], timeStartEnd[0], timeStartEnd[1]])
     print(word_start_end)
 
-    audio = librosa.load(f".\\sentences\\{sentence[i][0]}.wav")
+    audio = AudioSegment.from_wav(raw_data)
     file_name = sentence[i][0]
     for k in range(len(word_start_end)):
         segment_audio = audio[word_start_end[k][1] *1000: word_start_end[k][2]*1000]

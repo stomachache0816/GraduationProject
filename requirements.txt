@@ -14,7 +14,7 @@ torch==2.4.1
 torchvision==0.19.1
 torchaudio==2.4.1
 
-# aligment
+# aligement
 typing-extensions==4.11.0
 ipython==8.15.0
 pypinyin==0.51.0
