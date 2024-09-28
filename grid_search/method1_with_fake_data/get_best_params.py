@@ -21,7 +21,7 @@ print(f"scipy.__version__: {scipy.__version__}")
 print(f"tf.__version__: {tf.__version__}")
 print(f"tf.config.list_physical_devices('GPU'): {tf.config.list_physical_devices('GPU')}")
 
-npy_file_path_list: list = glob(f"..\\..\\data\\mfccEduVer\\*.npy")
+npy_file_path_list: list = glob(f"..\\..\\data\\*EduVer\\*.npy", recursive=True)
 
 mfcc_matrix_list = list()
 for npy_file_path in tqdm(npy_file_path_list):
@@ -49,7 +49,7 @@ for npy_file_path in npy_file_path_list:
 # 將list()轉換成np.array()
 label_pinyin_list = np.array(label_pinyin_list)
 
-sample_list = glob(f"..\\data\\samplePinyinEdu\\Male\\*.wav")
+sample_list = glob(f"..\\..\\data\\samplePinyinEdu\\Male\\*.wav")
 label_dic: dict = {}
 for i in range(len(sample_list)):
     label = sample_list[i][sample_list[i].find("_") + 1:sample_list[i].find(".wav")]
@@ -60,7 +60,6 @@ for label_pinyin in label_pinyin_list:
     label_int = label_dic[label_pinyin]
     label_int_list.append(label_int)
 label_int_list = np.array(label_int_list)
-
 
 def get_cnn_model(input_shape, num_classes, learning_rate=0.001, num_filters=32, dense_units=256):
     cnn_model = Sequential()
@@ -141,11 +140,11 @@ X_train = X_train.reshape(X_train.shape[0], mfcc_dim_1, mfcc_dim_2, channel)
 X_test = X_test.reshape(X_test.shape[0], mfcc_dim_1, mfcc_dim_2, channel)
 
 # 超參數
-learning_rate_range = [1e-2, 1e-3, 1e-4, 1e-5]  # 學習率
+learning_rate_range = [1e-3, 1e-4, 1e-5]  # 學習率
 num_filters_range = [32, 64, 128]  # 卷積層數量
 dense_units_range = [256, 512]  # 全連接層數量
 batch_size_range = [32, 64, 128]  # 批次大小
-epochs_range = [200, 300, 500]  # 訓練輪數
+epochs_range = [250, 500]  # 訓練輪數
 
 params_names = [
     "data_amount",
@@ -163,9 +162,10 @@ if not os.path.isdir(folder):
     os.mkdir(folder)
 
 record_file_name = f".\\hyper_parameters_record\\hyper_params_{mfcc_matrix_list.shape[0]}.csv"
-with open(file=record_file_name, mode="a", newline="") as file:
-    writer = csv.DictWriter(file, fieldnames=params_names)
-    writer.writeheader()
+if not os.path.exists(record_file_name):
+    with open(file=record_file_name, mode="a", newline="") as file:
+        writer = csv.DictWriter(file, fieldnames=params_names)
+        writer.writeheader()
 
 accuracies = []
 

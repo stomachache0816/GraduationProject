@@ -21,7 +21,8 @@ print(f"scipy.__version__: {scipy.__version__}")
 print(f"tf.__version__: {tf.__version__}")
 print(f"tf.config.list_physical_devices('GPU'): {tf.config.list_physical_devices('GPU')}")
 
-npy_file_path_list: list = glob(f"..\\..\\data\\*EduVer\\*.npy")
+npy_file_path_list: list = glob(f"..\\..\\data\\mfccEduVer\\*.npy")
+print(f"len(npy_file_path_list){len(npy_file_path_list)}")
 
 mfcc_matrix_list = list()
 for npy_file_path in tqdm(npy_file_path_list):
@@ -163,9 +164,10 @@ if not os.path.isdir(folder):
     os.mkdir(folder)
 
 record_file_name = f".\\hyper_parameters_record\\hyper_params_{mfcc_matrix_list.shape[0]}.csv"
-with open(file=record_file_name, mode="a", newline="") as file:
-    writer = csv.DictWriter(file, fieldnames=params_names)
-    writer.writeheader()
+if not os.path.exists(record_file_name):
+    with open(file=record_file_name, mode="a", newline="") as file:
+        writer = csv.DictWriter(file, fieldnames=params_names)
+        writer.writeheader()
 
 accuracies = []
 
