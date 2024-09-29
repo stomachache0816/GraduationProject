@@ -27,6 +27,7 @@ class MyApp extends StatelessWidget {
 }
 
 // 主畫面
+
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
@@ -35,174 +36,101 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  bool _isMenuOpen = false;
-
-  void _toggleMenu() {
-    setState(() {
-      _isMenuOpen = !_isMenuOpen;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Scaffold(
+          // 背景圖片
           body: Container(
             decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFFa1c4fd), Color(0xFFc2e9fb)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+              image: DecorationImage(
+                image: AssetImage('assets/images/backgroundMain.png'),
+                fit: BoxFit.cover,
               ),
             ),
-          ),
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
-                icon: GestureDetector(
-                  onTap: _toggleMenu,
-                  child: const Icon(Icons.history, color: Colors.black),
-                ),
-                label: '測驗紀錄',
-              ),
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.home, color: Colors.black),
-                label: '主畫面',
-              ),
-              const BottomNavigationBarItem(
-                icon: Icon(Icons.settings, color: Colors.black),
-                label: '設定',
-              ),
-            ],
-            currentIndex: 1,
-            backgroundColor: const Color(0xFFA1B7CD),
-            onTap: (index) {
-              switch (index) {
-                case 0: // 測驗紀錄
-                  Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) => HistoryPage(),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                      const begin = Offset(-1.0, 0.0); // 從右側進入
-                      const end = Offset.zero;
-                      const curve = Curves.easeInOut;
-
-                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                      var offsetAnimation = animation.drive(tween);
-
-                      return SlideTransition(
-                        position: offsetAnimation,
-                        child: child,
+            child: Stack(
+              children: [
+                // 開始使用 (左上)
+                Positioned(
+                  right: -155,
+                  top: 48,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const RecordingPage(),
+                          )
                       );
                     },
-                   ),
-                  );
-                  break;
-                case 1: // 主畫面
-                  break;
-                case 2: // 設定
-                  Navigator.of(context).push(PageRouteBuilder(
-                    pageBuilder: (context, animation, secondaryAnimation) => const SettingPage(),
-                    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-                      const begin = Offset(1.0, 0.0); // 從右側進入
-                      const end = Offset.zero;
-                      const curve = Curves.easeInOut;
-
-                      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-                      var offsetAnimation = animation.drive(tween);
-
-                      return SlideTransition(
-                        position: offsetAnimation,
-                        child: child,
+                    child: Image.asset(
+                      'assets/images/Start.png',
+                      width: 700,
+                      height: 700,
+                    ),
+                  ),
+                ),
+                // 歷史紀錄 (右上)
+                Positioned(
+                  right: -155,
+                  top: 48,
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => HistoryPage(),
+                          )
                       );
                     },
-                  )
-                 );
-                break;
-              }
-            },
-          ),
-            floatingActionButton: Align(
-              alignment: Alignment.bottomCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 130.0, left: 35.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    SizedBox(
-                      width: 300,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(builder: (context) => const RecordingPage()),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFA0C3E2),
-                          side: const BorderSide(color: Colors.white, width: 2.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 0,
-                        ).copyWith(
-                          elevation: MaterialStateProperty.resolveWith<double>(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.pressed)) {
-                                return 4.0; // 按下時的陰影
-                              }
-                              return 8.0; // 常態陰影
-                            },
-                          ),
-                        ),
-                        child: const Text(
-                          '開始使用',
-                          style: TextStyle(fontSize: 24, color: Colors.black),
-                        ),
-                      ),
+                    child: Image.asset(
+                      'assets/images/History.png',
+                      width: 700,
+                      height: 700,
                     ),
-                    const SizedBox(height: 40), // 按鈕之間的間距
-                    SizedBox(
-                      width: 300,
-                      height: 60,
-                      child: ElevatedButton(
-                        onPressed: () {
-                          // 導航到使用教學頁面
-                        },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFF8CB3FF),
-                          side: const BorderSide(color: Colors.white, width: 2.0),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          elevation: 0,
-                        ).copyWith(
-                          elevation: MaterialStateProperty.resolveWith<double>(
-                                (Set<MaterialState> states) {
-                              if (states.contains(MaterialState.pressed)) {
-                                return 4.0; // 按下時的陰影
-                              }
-                              return 8.0; // 常態陰影
-                            },
-                          ),
-                        ),
-                        child: const Text(
-                          '使用教學',
-                          style: TextStyle(fontSize: 24, color: Colors.black),
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
+                // 使用教學 (左下)
+                Positioned(
+                  left: -155,
+                  bottom: 30,
+                  child: GestureDetector(
+                    onTap: () {
+                      // 導向頁面3
+                    },
+                    child: Image.asset(
+                      'assets/images/Teaching.png',
+                      width: 700,
+                      height: 700,
+                    ),
+                  ),
+                ),
+                // 設定 (右下)
+                Positioned(
+                  right: -155,
+                  bottom: 30,
+                  child: GestureDetector(
+                    onTap: () {
+                      // 導向頁面4
+                    },
+                    child: Image.asset(
+                      'assets/images/Setting.png',
+                      width: 700,
+                      height: 700,
+                    ),
+                  ),
+                ),
+              ],
             ),
+          ),
         ),
       ],
     );
   }
 }
+
 
 //錄音介面
 
@@ -292,7 +220,7 @@ class _RecordingPageState extends State<RecordingPage> {
   void _goToResultPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ResultPage()), // 導向結果
+      MaterialPageRoute(builder: (context) => const ResultPage()), // 導向結果頁面
     );
   }
 
@@ -417,31 +345,3 @@ class _RecordingPageState extends State<RecordingPage> {
     );
   }
 }
-
-// 自定義過場動畫
-// PageRouteBuilder _customPageRoute1(Widget page) {
-//   return PageRouteBuilder(
-//     pageBuilder: (context, animation, secondaryAnimation) => page,
-//     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-//       const begin = Offset(1.0, 0.0);
-//       const end = Offset.zero;
-//       const curve = Curves.easeInOut; // 讓過渡效果更平滑
-//
-//       var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
-//       var offsetAnimation = animation.drive(tween);
-//
-//       var reverseTween = Tween(begin: Offset.zero, end: const Offset(-1.0, 0.0)).chain(CurveTween(curve: curve));
-//       var reverseAnimation = secondaryAnimation.drive(reverseTween);
-//
-//       return Stack(
-//         children: [
-//           SlideTransition(position: reverseAnimation, child: child), // 舊頁面向左移動
-//           SlideTransition(position: offsetAnimation, child: child), // 新頁面向中間移動
-//         ],
-//       );
-//     },
-//     transitionDuration: const Duration(milliseconds: 450), // 調整動畫時間，更加明顯
-//   );
-// }
-
-
