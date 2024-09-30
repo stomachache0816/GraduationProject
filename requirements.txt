@@ -22,6 +22,7 @@ openai-whisper==20231117
 librosa==0.10.2.post1
 OpenCC==1.1.7
 pydub==0.25.1
+SpeechRecognition==3.10.4
 
 # others
 tqdm==4.66.5
