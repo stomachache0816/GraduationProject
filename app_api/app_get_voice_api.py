@@ -1,6 +1,9 @@
 from flask import Flask, request, jsonify
 import os
 from aligement import text_recognize
+from tensorflow.keras.models import load_model
+from process import  load_recorded
+from glob import glob
 app = Flask(__name__)
 
 UPLOAD_FOLDER = f".\\app_voice\\"
@@ -30,6 +33,16 @@ def upload_file():
     }
 
     return jsonify(result), 200
+
+# def model_predict():
+#     load_recorded()
+#     counter = len(glob(".\\data\\"))
+#     wav_file_path_list = glob(f"")
+#
+#     model = load_model(filepath=f"..\\cnn_method1\\cnn_model.h5")
+#     predictions = model.predict()
+
+
 
 
 app.run(debug=True, host=host_ip, port=host_port)
