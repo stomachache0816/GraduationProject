@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 import os
 from aligement import text_recognize
-
 app = Flask(__name__)
 
 UPLOAD_FOLDER = f".\\app_voice\\"

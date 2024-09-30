@@ -71,7 +71,7 @@ def text_recognize():
         '2', '二').replace('9', '九').replace('8', '八').replace('5', '五').replace('3', '三').replace('0',
                                                                                                        '零').replace(
         '1', '一').replace('7', '七').replace(' ', '').replace('、', '')
-
+    print(sentence)
     return sentence
 
     # audio = AudioSegment.from_file(raw_data_path)
