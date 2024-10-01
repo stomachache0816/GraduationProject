@@ -157,5 +157,3 @@ def model_predict():
 
     # model = load_model(filepath=f"..\\cnn_method1\\cnn_model.h5")
     # predictions = model.predict()
-
-model_predict()
