@@ -28,8 +28,8 @@ def upload_file():
     sentence = text_recognize()
 
     result = {
-        'message': sentence,
-        'file_path': file_path
+        "message": sentence,
+        "file_path": file_path
     }
 
     return jsonify(result), 200

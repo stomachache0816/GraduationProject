@@ -1,4 +1,5 @@
 from tensorflow.keras.models import load_model
+from tensorflow.keras.utils import to_categorical
 import torch
 from torchaudio.pipelines import MMS_FA as bundle
 from typing import List
@@ -15,6 +16,7 @@ import numpy as np
 import librosa
 from sklearn.preprocessing import StandardScaler
 from tqdm import tqdm
+
 
 def compute_alignments(waveform: torch.Tensor, transcript: List[str]):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -68,12 +70,12 @@ def load_recorded():
     word_start_end = []
     pinyin_tone = pinyin(text_raw, style=Style.TONE3, heteronym=False)
     for j in range(len(transcript)):  # len(transcript)
-        timeStartEnd = preview_word(waveform_tensor, token_spans[j], num_frames, transcript[j], sample_rate)
-        word_start_end.append([pinyin_tone[j][0], timeStartEnd[0], timeStartEnd[1]])
+        time_start_end = preview_word(waveform_tensor, token_spans[j], num_frames, transcript[j], sample_rate)
+        word_start_end.append([pinyin_tone[j][0], time_start_end[0], time_start_end[1]])
         print(word_start_end)
 
-        audio = AudioSegment.from_file(sentence_path_name)
-        file_name = sentence
+    audio = AudioSegment.from_file(sentence_path_name)
+    file_name = sentence
 
     data_dir_path = sentence_path_name.replace("\\sentences\\", "\\data\\").replace(".wav", "")
     if not os.path.exists(data_dir_path):
@@ -134,7 +136,7 @@ def model_predict():
     mfcc_matrix_list = list()
 
     for npy_file_path in tqdm(npy_file_path_list):
-        mfcc_matrix = np.load(file=npy_file_path)
+        mfcc_matrix = np.load(file=npy_file_path, allow_pickle=True)
         mfcc_matrix_list.append(mfcc_matrix)
 
     mfcc_matrix_list = np.array(mfcc_matrix_list)
@@ -150,10 +152,28 @@ def model_predict():
     for mfcc in mfcc_matrix_list:
         mfcc_matrix_list_scaled.append(scaler.transform(mfcc))
 
-    mfcc_matrix_list_scaled = np.array(mfcc_matrix_list_scaled)
+    sample_pinyin_dict = dict()
+    sample_pinyin_path_list = glob(f"..\\data\\samplePinyinEdu\\Male\\*.wav")
+    for i, sample_pinyin_path in enumerate(sample_pinyin_path_list, start=0):
+        pinyin = sample_pinyin_path[sample_pinyin_path.find("_") + 1 : sample_pinyin_path.find(".wav")]
+        sample_pinyin_dict[i] = pinyin
 
-    print(mfcc_matrix_list_scaled.shape)
+    # mfcc_matrix_list_scaled = np.array(mfcc_matrix_list_scaled)
+    # y_one_hot = to_categorical(y, num_classes=num_classes)
+    #
+    # print(mfcc_matrix_list_scaled.shape)
 
 
-    # model = load_model(filepath=f"..\\cnn_method1\\cnn_model.h5")
-    # predictions = model.predict()
+    model = load_model(filepath=f"..\\cnn_method1\\cnn_model.h5")
+    for mfcc_matrix in mfcc_matrix_list_scaled:
+        mfcc_matrix = np.reshape(mfcc_matrix, (-1, 13, 44, 1))
+        prediction = model.predict(mfcc_matrix)
+        result = prediction[0]
+        pinyin_int_label = list(result).index(max(result))
+        pred_pinyin_label = sample_pinyin_dict[pinyin_int_label]
+        print(pred_pinyin_label)
+        # print(prediction)
+        # print(prediction.shape)
+        # print("-" * 50)
+
+model_predict()
