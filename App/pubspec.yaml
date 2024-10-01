@@ -67,6 +67,7 @@ flutter:
     - assets/images/Teaching.png
     - assets/images/History.png
     - assets/images/Setting.png
+    - assets/images/backgroundMain2.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

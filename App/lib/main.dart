@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:index/IntroPage.dart';
 import 'SettingPage.dart';
 import 'ResultPage.dart';
@@ -36,100 +38,100 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Scaffold(
+    return Scaffold(
+      body: Stack(
+        children: [
           // 背景圖片
-          body: Container(
+          Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/backgroundMain.png'),
+                image: AssetImage('assets/images/backgroundMain2.png'),
                 fit: BoxFit.cover,
               ),
             ),
-            child: Stack(
-              children: [
-                // 開始使用 (左上)
-                Positioned(
-                  right: -155,
-                  top: 48,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const RecordingPage(),
-                          )
-                      );
-                    },
-                    child: Image.asset(
-                      'assets/images/Start.png',
-                      width: 700,
-                      height: 700,
-                    ),
-                  ),
-                ),
-                // 歷史紀錄 (右上)
-                Positioned(
-                  right: -155,
-                  top: 48,
-                  child: InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => HistoryPage(),
-                          )
-                      );
-                    },
-                    child: Image.asset(
-                      'assets/images/History.png',
-                      width: 700,
-                      height: 700,
-                    ),
-                  ),
-                ),
-                // 使用教學 (左下)
-                Positioned(
-                  left: -155,
-                  bottom: 30,
-                  child: GestureDetector(
-                    onTap: () {
-                      // 導向頁面3
-                    },
-                    child: Image.asset(
-                      'assets/images/Teaching.png',
-                      width: 700,
-                      height: 700,
-                    ),
-                  ),
-                ),
-                // 設定 (右下)
-                Positioned(
-                  right: -155,
-                  bottom: 30,
-                  child: GestureDetector(
-                    onTap: () {
-                      // 導向頁面4
-                    },
-                    child: Image.asset(
-                      'assets/images/Setting.png',
-                      width: 700,
-                      height: 700,
-                    ),
-                  ),
-                ),
-              ],
+          ),
+          // 透明按鈕(Start)左上
+          Positioned(
+            left: 10,  // 距離左側 50 像素
+            bottom: 400, // 距離底部 100 像素
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const RecordingPage()), // 導向結果頁面
+                );
+              },
+              child: Container(
+                width: 175,
+                height: 190,
+                color: Colors.black.withOpacity(0.1),
+                child: const SizedBox(),
+              ),
             ),
           ),
-        ),
-      ],
+          //透明按鈕(歷史紀錄)右上
+          Positioned(
+            right: 10,
+            bottom: 330,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HistoryPage()),
+                );
+              },
+              child: Container(
+                width: 175,
+                height: 250,
+                color: Colors.black.withOpacity(0.1),
+                child: const SizedBox(),
+              ),
+            ),
+          ),
+          //透明按鈕(使用教學)左下
+          Positioned(
+            left: 10,
+            bottom: 70,
+            child: GestureDetector(
+              onTap: () {
+
+              },
+              child: Container(
+                width: 175,
+                height: 280,
+                color: Colors.black.withOpacity(0.1),
+                child: const SizedBox(),
+              ),
+            ),
+          ),
+          //透明按鈕(設定)右下
+          Positioned(
+            right: 10,
+            bottom: 70,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SettingPage()),
+                );
+              },
+              child: Container(
+                width: 175,
+                height: 200,
+                color: Colors.black.withOpacity(0.1),
+                child: const SizedBox(),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
+
+
 
 
 //錄音介面

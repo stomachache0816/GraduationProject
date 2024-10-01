@@ -58,7 +58,7 @@ class ResultPage extends StatelessWidget {
                   ),
                   child: const Center(
                     child: Text(
-                      '錄音結果!',
+                      'result',
                       style: TextStyle(fontSize: 18, color: Colors.black),
                       textAlign: TextAlign.center,
                     ),
