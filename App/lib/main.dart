@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:index/IntroPage.dart';
@@ -10,6 +9,7 @@ import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 import 'voice_API.dart';
+import 'package:index/CorrectPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -151,6 +151,7 @@ class _RecordingPageState extends State<RecordingPage> {
 
   FlutterSoundRecorder? _recorder;
   String _filePath = '';
+  String _result = '';
 
   @override
   void initState() {
@@ -187,7 +188,8 @@ class _RecordingPageState extends State<RecordingPage> {
   // 停止錄音
   Future<void> _stopRecording() async {
     await _recorder!.stopRecorder();
-    var result = uploadAudioFile(_filePath);
+    String result = await uploadAudioFile(_filePath);
+    _result = result;
   }
 
   @override
@@ -222,7 +224,9 @@ class _RecordingPageState extends State<RecordingPage> {
   void _goToResultPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => const ResultPage()), // 導向結果頁面
+      MaterialPageRoute(
+          builder: (context) => ResultPage(result: _result)
+      ), // 導向結果頁面
     );
   }
 
