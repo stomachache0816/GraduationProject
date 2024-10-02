@@ -164,7 +164,7 @@ def model_predict():
     # print(mfcc_matrix_list_scaled.shape)
 
 
-    model = load_model(filepath=f"..\\cnn_method1\\cnn_model.h5")
+    model = load_model(filepath=f"..\\cnn_method1\\cnn_edu_with_fake_model.h5")
     for mfcc_matrix in mfcc_matrix_list_scaled:
         mfcc_matrix = np.reshape(mfcc_matrix, (-1, 13, 44, 1))
         prediction = model.predict(mfcc_matrix)
