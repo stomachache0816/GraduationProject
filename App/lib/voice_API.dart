@@ -2,8 +2,8 @@ import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 import 'dart:convert';  // 用於解析 JSON 響應
 
-Future<void> uploadAudioFile(String filePath) async {
-  var uri = Uri.parse('http://192.168.254.156:5000/app_voice');
+Future<String> uploadAudioFile(String filePath) async {
+  var uri = Uri.parse('http://192.168.1.111:5000/app_voice');
 
   var request = http.MultipartRequest('POST', uri);
 
@@ -29,5 +29,6 @@ Future<void> uploadAudioFile(String filePath) async {
     print('File upload failed with status: ${response.statusCode}');
   }
 
+  await Future.delayed(const Duration(seconds: 2));
   return result;
 }

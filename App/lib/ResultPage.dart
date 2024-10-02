@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:index/CorrectPage.dart';
 import 'package:index/main.dart';
 
 class ResultPage extends StatelessWidget {
-  const ResultPage({super.key});
+  final String result;
+  const ResultPage({super.key, required this.result});
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +58,10 @@ class ResultPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  child: const Center(
+                  child: Center(
                     child: Text(
-                      'result',
-                      style: TextStyle(fontSize: 18, color: Colors.black),
+                      result,
+                      style: const TextStyle(fontSize: 18, color: Colors.black),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -74,7 +76,10 @@ class ResultPage extends StatelessWidget {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => CorrectPage()),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF8CB3FF), // 藍色
