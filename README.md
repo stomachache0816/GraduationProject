@@ -33,5 +33,5 @@ Pycharm
 #### Package Installation (Automatic)
 *path of [requirements.txt](.\\requirements.txt)
 ```angular2html
-pip install -r requirements.txt
+pip install -r [https://github.com/stomachache0816/GraduationProject/blob/main/requirements.txt](https://github.com/stomachache0816/GraduationProject/blob/main/requirements.txt)
 ```
