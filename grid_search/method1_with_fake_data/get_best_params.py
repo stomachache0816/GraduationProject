@@ -49,7 +49,7 @@ for npy_file_path in npy_file_path_list:
 # 將list()轉換成np.array()
 label_pinyin_list = np.array(label_pinyin_list)
 
-sample_list = glob(f"..\\..\\data\\samplePinyinEdu\\Male\\*.wav")
+sample_list = glob(f"..\\..\\data\\samplePinyinEdu\\maleWav\\*.wav")
 label_dic: dict = {}
 for i in range(len(sample_list)):
     label = sample_list[i][sample_list[i].find("_") + 1:sample_list[i].find(".wav")]
@@ -219,5 +219,5 @@ with open(f"best_params.json", "w") as json_file:
 DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1287413088970346557/30gx7NdIfSxS1BRWk28IRkOHJeoET-ihIN_KAjYeXYkrpPeI0hBnE-68AHzhpTR4h3et"
 requests.post(
     url=DISCORD_WEBHOOK_URL,
-    data={"content": "超參數尋找已完成!"}
+    data={"content": "cnn with fake data 超參數尋找已完成!"}
 )
