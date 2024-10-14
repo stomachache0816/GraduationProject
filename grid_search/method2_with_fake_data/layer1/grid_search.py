@@ -9,26 +9,26 @@ import csv
 
 class_df = pd.read_csv(filepath_or_buffer="..\\..\\..\\cnn_method2\\tables\\corrected_class_df_pinyin_label_table.csv")
 
-npy_file_path = glob("..\\..\\..\\data\\*EduVer\\*.npy", recursive=True)
+npy_file_path_list = glob("..\\..\\..\\data\\*EduVer\\*.npy", recursive=True)
 
-npy_file_path_selected = list()
-for npy_file in npy_file_path:
-    pinyin = npy_file.split("_")[1]
+npy_file_path_list_selected = list()
+for npy_file_path in npy_file_path_list:
+    pinyin = npy_file_path.split("_")[1]
     pinyin_non_accent = pinyin[:-1] if pinyin[-1].isdigit() else pinyin
     if pinyin_non_accent in list(class_df["pinyin"]):
-        npy_file_path_selected.append(npy_file)
+        npy_file_path_list_selected.append(npy_file_path)
 
 data_class_label = list()
-for npy_file in tqdm(npy_file_path_selected):
-    pinyin = npy_file.split("_")[1]
+for npy_file_path in tqdm(npy_file_path_list_selected):
+    pinyin = npy_file_path.split("_")[1]
     pinyin_non_accent = pinyin[:-1] if pinyin[-1].isdigit() else pinyin
     class_label = class_df.loc[class_df["pinyin"] == pinyin_non_accent, "class_label"].iloc[0]
     data_class_label.append(class_label)
 data_class_label = np.array(data_class_label)
 
 mfcc_matrix_list = list()
-for npy_file in tqdm(npy_file_path_selected):
-    mfcc_matrix = np.load(npy_file)
+for npy_file_path in tqdm(npy_file_path_list_selected):
+    mfcc_matrix = np.load(npy_file_path)
     mfcc_matrix_list.append(mfcc_matrix)
 mfcc_matrix_list = np.array(mfcc_matrix_list)
 
@@ -67,9 +67,9 @@ X_train, X_test, y_train, y_test = get_processed_data(
 )
 
 # 網格搜尋
-folder = f".\\hyper_parameters_record\\"
-if not os.path.isdir(folder):
-    os.mkdir(folder)
+folder_path = f".\\hyper_parameters_record\\"
+if not os.path.isdir(folder_path):
+    os.mkdir(folder_path)
 
 record_file_name = f".\\hyper_parameters_record\\hyper_params_{mfcc_matrix_list.shape[0]}.csv"
 if not os.path.exists(record_file_name):
