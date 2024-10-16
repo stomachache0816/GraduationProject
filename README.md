@@ -31,7 +31,7 @@ Pycharm
 .venv in Pycharm (Recommend)
 
 #### Package Installation (Automatic)
-*path of [requirements.txt](.\\requirements.txt)
+*path of [requirements.txt](https://raw.githubusercontent.com/stomachache0816/GraduationProject/refs/heads/main/requirements.txt)
 ```angular2html
 pip install -r https://raw.githubusercontent.com/stomachache0816/GraduationProject/main/requirements.txt
 ```
