@@ -78,7 +78,7 @@ if not os.path.isdir(folder_path):
 model_train_info_list = list()
 model_list = list()
 
-for i in tqdm(range(len(class_df.groupby("class_label").count().index))):
+for i in tqdm(range(18, len(class_df.groupby("class_label").count().index))):
     record_file_name = f".\\hyper_parameters_record\\hyper_params_class_{i}.csv"
     if not os.path.exists(record_file_name):
         with open(file=record_file_name, mode="a", newline="") as file:

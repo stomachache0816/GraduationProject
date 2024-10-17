@@ -1,0 +1,1 @@
+{"data_amount": 851, "learning_rate": 0.001, "num_filters": 64, "dense_unit": 512, "batch_size": 32, "epochs": 500, "accuracy": 0.9590643048286438}
