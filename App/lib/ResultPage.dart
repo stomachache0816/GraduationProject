@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:index/CorrectPage.dart';
 import 'package:index/main.dart';
+import 'package:index/voice_API.dart';
 
 class ResultPage extends StatelessWidget {
   final String result;
@@ -75,10 +76,11 @@ class ResultPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
+                      Map<dynamic, dynamic> analysis = await getAnalysis();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CorrectPage()),
+                        MaterialPageRoute(builder: (context) => CorrectPage(analysis: analysis)),
                       );
                     },
                     style: ElevatedButton.styleFrom(

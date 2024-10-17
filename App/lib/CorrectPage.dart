@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:index/main.dart';
 
 class CorrectPage extends StatelessWidget {
-  const CorrectPage({super.key});
-
+  final Map analysis;
+  const CorrectPage({super.key, required this.analysis});
   @override
   Widget build(BuildContext context) {
+    String main_sentence = analysis["main_sentence"];
     return Scaffold(
       backgroundColor: const Color(0xFFa1c4fd),
       body: Padding(
@@ -30,16 +31,9 @@ class CorrectPage extends StatelessWidget {
                 border: Border.all(color: Colors.redAccent),
               ),
               child: RichText(
-                text: const TextSpan(
-                  style: TextStyle(fontSize: 24),
-                  children: [
-                    TextSpan(text: '「今天的天'),
-                    TextSpan(
-                      text: 'ㄑㄧˇ',
-                      style: TextStyle(color: Colors.red),
-                    ),
-                    TextSpan(text: '真好」'),
-                  ],
+                text: TextSpan(
+                  text: main_sentence,
+                  style: const TextStyle(fontSize: 24),
                 ),
               ),
             ),

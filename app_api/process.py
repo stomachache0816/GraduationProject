@@ -81,14 +81,15 @@ def load_recorded():
     if not os.path.exists(data_dir_path):
         os.makedirs(data_dir_path)
 
+    pinyin_list = list()
     for k in range(len(word_start_end)):
         segment_audio = audio[word_start_end[k][1] * 1000: word_start_end[k][2] * 1000]
         segment_audio.export(f"{data_dir_path}\\{file_name}-{k}_{word_start_end[k][0]}.wav", format="wav")
+        pinyin_list.append(word_start_end[k][0])
         # print(f"{data_dir_path}\\{file_name}-{k}_{word_start_end[k][0]}.wav")
     print('------------------------------------------')
 
-    return data_dir_path
-
+    return data_dir_path, pinyin_list, sentence
 
 def get_mfcc(file_path, n_mfcc, max_pad_len, n_fft=2048, sr=22050, fmax=None, n_mels=128):
     # 讀取音檔，轉為單聲道
@@ -111,9 +112,8 @@ def get_mfcc(file_path, n_mfcc, max_pad_len, n_fft=2048, sr=22050, fmax=None, n_
 
     return mfccs
 
-
 def model_predict():
-    data_dir_path = load_recorded()
+    data_dir_path, pinyin_list, sentence = load_recorded()
     wav_file_path_list = glob(f"{data_dir_path}\\*.wav")
 
     npy_file_path_list = list()
@@ -153,7 +153,7 @@ def model_predict():
         mfcc_matrix_list_scaled.append(scaler.transform(mfcc))
 
     sample_pinyin_dict = dict()
-    sample_pinyin_path_list = glob(f"..\\data\\samplePinyinEdu\\Male\\*.wav")
+    sample_pinyin_path_list = glob(f"..\\data\\samplePinyinEdu\\maleWav\\*.wav")
     for i, sample_pinyin_path in enumerate(sample_pinyin_path_list, start=0):
         pinyin = sample_pinyin_path[sample_pinyin_path.find("_") + 1 : sample_pinyin_path.find(".wav")]
         sample_pinyin_dict[i] = pinyin
@@ -163,6 +163,7 @@ def model_predict():
     #
     # print(mfcc_matrix_list_scaled.shape)
 
+    predict_pinyin_list = list()
 
     model = load_model(filepath=f"..\\cnn_method1\\cnn_edu_with_fake_model.h5")
     for mfcc_matrix in mfcc_matrix_list_scaled:
@@ -172,8 +173,9 @@ def model_predict():
         pinyin_int_label = list(result).index(max(result))
         pred_pinyin_label = sample_pinyin_dict[pinyin_int_label]
         print(pred_pinyin_label)
+        predict_pinyin_list.append(pred_pinyin_label)
+
+    return predict_pinyin_list, pinyin_list, sentence
         # print(prediction)
         # print(prediction.shape)
         # print("-" * 50)
-
-model_predict()
