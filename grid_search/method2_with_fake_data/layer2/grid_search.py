@@ -78,6 +78,7 @@ if not os.path.isdir(folder_path):
 model_train_info_list = list()
 model_list = list()
 
+# 上次中斷 這次從label 18開始 也就是第19個模型
 for i in tqdm(range(18, len(class_df.groupby("class_label").count().index))):
     record_file_name = f".\\hyper_parameters_record\\hyper_params_class_{i}.csv"
     if not os.path.exists(record_file_name):
