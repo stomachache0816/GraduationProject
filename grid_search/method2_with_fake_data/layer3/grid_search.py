@@ -23,7 +23,7 @@ dic = dict()
 
 for i in range(len(class_df.groupby("class_label").count().index)):
     dic[f"class_{i}_mfcc_matrix_list"] = list()
-    dic[f"class_{i}_class_label_index_list"] = list()
+    dic[f"class_{i}_accent_label_index_list"] = list()
 
 for npy_file_path in tqdm(selected_npy_file_path_list):
     pinyin = npy_file_path.split("_")[1]
@@ -35,15 +35,15 @@ for npy_file_path in tqdm(selected_npy_file_path_list):
 
     mfcc_matrix = np.load(npy_file_path)
     dic[f"class_{class_label}_mfcc_matrix_list"].append(mfcc_matrix)
-    dic[f"class_{class_label}_class_label_index_list"].append(accent_label)
+    dic[f"class_{class_label}_accent_label_index_list"].append(accent_label)
 
 for i in range(len(class_df.groupby("class_label").count().index)):
     dic[f"class_{i}_mfcc_matrix_list"] = np.array(dic[f"class_{i}_mfcc_matrix_list"])
-    dic[f"class_{i}_class_label_index_list"] = np.array(dic[f"class_{i}_class_label_index_list"])
+    dic[f"class_{i}_accent_label_index_list"] = np.array(dic[f"class_{i}_accent_label_index_list"])
 
 for i in range(len(class_df.groupby("class_label").count().index)):
     print(f"class_{i}_mfcc_matrix_list.shape: {dic[f'class_{i}_mfcc_matrix_list'].shape}")
-    print(f"class_{i}_class_label_index_list.shape: {dic[f'class_{i}_class_label_index_list'].shape}")
+    print(f"class_{i}_accent_label_index_list.shape: {dic[f'class_{i}_accent_label_index_list'].shape}")
 
 channel = 1
 verbose = 2
@@ -94,7 +94,7 @@ for i in tqdm(range(len(class_df.groupby("class_label").count().index))):
                 for batch_size in batch_size_range:
                     for epochs in epochs_range:
                         X = dic[f"class_{i}_mfcc_matrix_list"]
-                        y = dic[f"class_{i}_class_label_index_list"]
+                        y = dic[f"class_{i}_accent_label_index_list"]
 
                         mfcc_dim_1 = X.shape[1]
                         mfcc_dim_2 = X.shape[2]
