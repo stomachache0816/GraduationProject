@@ -80,7 +80,9 @@ class ResultPage extends StatelessWidget {
                       Map<dynamic, dynamic> analysis = await getAnalysis();
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => CorrectPage(analysis: analysis)),
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                CorrectPage(analysis: analysis)),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -97,7 +99,8 @@ class ResultPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const HomePage()),
+                        MaterialPageRoute(
+                            builder: (context) => const HomePage()),
                       );
                     },
                     style: ElevatedButton.styleFrom(

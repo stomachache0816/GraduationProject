@@ -6,7 +6,7 @@ class HistoryPage extends StatelessWidget {
 
   // 模擬的歷史紀錄數據
   final List<Map<String, String>> _historyRecords = [
-    {'title': '紀錄 1', 'date': '2024/09/20', 'detail': '這是紀錄 1 的詳細內容。'},
+    {'title': '今天是禮拜日', 'date': '2024/09/20', 'detail': '這是紀錄 1 的詳細內容。'},
     {'title': '紀錄 2', 'date': '2024/09/21', 'detail': '這是紀錄 2 的詳細內容。'},
     {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
   ];

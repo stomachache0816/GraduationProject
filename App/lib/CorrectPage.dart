@@ -7,6 +7,15 @@ class CorrectPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String main_sentence = analysis["main_sentence"];
+
+    List<dynamic> correct_info_list = analysis["correct_info_list"];
+    //correct_info_list.length是字的數量
+    String text = "";
+    for (var correct_info in correct_info_list) {
+      text += correct_info.join(', ') + "\n";
+    }
+    text = text.substring(0 , text.length-1);
+
     return Scaffold(
       backgroundColor: const Color(0xFFa1c4fd),
       body: Padding(
@@ -46,9 +55,9 @@ class CorrectPage extends StatelessWidget {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(color: Colors.blueAccent),
               ),
-              child: const Text(
-                '氣, ㄑㄧˇ, qi4',
-                style: TextStyle(fontSize: 24),
+              child: Text(
+                text,
+                style: const TextStyle(fontSize: 24),
               ),
             ),
             Row(
