@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 width: 175,
                 height: 190,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withOpacity(0),
                 child: const SizedBox(),
               ),
             ),
@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 width: 175,
                 height: 250,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withOpacity(0),
                 child: const SizedBox(),
               ),
             ),
@@ -101,7 +101,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 width: 175,
                 height: 280,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withOpacity(0),
                 child: const SizedBox(),
               ),
             ),
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
               child: Container(
                 width: 175,
                 height: 200,
-                color: Colors.black.withOpacity(0.1),
+                color: Colors.black.withOpacity(0),
                 child: const SizedBox(),
               ),
             ),
