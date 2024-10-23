@@ -10,6 +10,7 @@ import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
 import 'voice_API.dart';
 import 'package:index/CorrectPage.dart';
+import 'package:index/TeachingPage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -97,7 +98,10 @@ class _HomePageState extends State<HomePage> {
             bottom: 70,
             child: GestureDetector(
               onTap: () {
-
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TeachingPage()), // 導向結果頁面
+                );
               },
               child: Container(
                 width: 175,

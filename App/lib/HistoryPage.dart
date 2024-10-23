@@ -38,7 +38,7 @@ class HistoryPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('歷史紀錄'),
-        backgroundColor: const Color(0xFFa1c4fd),
+        backgroundColor: const Color(0xFFFFF09A),
       ),
       body: ListView.builder(
         itemCount: historyRecords.length,
