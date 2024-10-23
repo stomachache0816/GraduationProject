@@ -59,7 +59,7 @@ class _SettingPageState extends State<SettingPage> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('設定'),
-        backgroundColor: const Color(0xFFa1c4fd),
+        backgroundColor: const Color(0xFFFFF09A),
       ),
       body: ListView(
         padding: const EdgeInsets.all(16.0),
@@ -71,7 +71,7 @@ class _SettingPageState extends State<SettingPage> {
           ),
           const SizedBox(height: 10),
           ListTile(
-            leading: const Icon(Icons.person, color: Colors.blue),
+            leading: const Icon(Icons.person, color: Color(0xFFFEE911)),
             title: const Text('暱稱'),
             subtitle: Text(_nickname),
             trailing: const Icon(Icons.edit),
