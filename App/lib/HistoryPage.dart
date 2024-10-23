@@ -9,6 +9,10 @@ class HistoryPage extends StatelessWidget {
     {'title': '今天是禮拜日', 'date': '2024/09/20', 'detail': '這是紀錄 1 的詳細內容。'},
     {'title': '紀錄 2', 'date': '2024/09/21', 'detail': '這是紀錄 2 的詳細內容。'},
     {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
+    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
+    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
+    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
+    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
   ];
 
   // 彈出對話框來顯示詳細內容
@@ -48,7 +52,6 @@ class HistoryPage extends StatelessWidget {
             child: ListTile(
               leading: const Icon(Icons.history, color: Colors.blue),
               title: Text(record['title']!),
-              subtitle: Text('日期: ${record['date']}'),
               trailing: ElevatedButton(
                 onPressed: () {
                   _showDetailDialog(context, record['title']!, record['detail']!);

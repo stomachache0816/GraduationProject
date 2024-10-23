@@ -13,7 +13,7 @@ class ResultPage extends StatelessWidget {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFa1c4fd), Color(0xFFc2e9fb)],
+            colors: [Color(0xFFfff09a), Color(0xFFfaff9a)],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),

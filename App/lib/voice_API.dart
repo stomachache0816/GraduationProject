@@ -3,7 +3,7 @@ import 'package:path/path.dart';
 import 'dart:convert';  // 用於解析 JSON 響應
 
 Future<String> uploadAudioFile(String filePath) async {
-  var uri = Uri.parse('http://192.168.254.156:5000/app_voice');
+  var uri = Uri.parse('http://192.168.1.112:5000/app_voice');
 
   var request = http.MultipartRequest('POST', uri);
 
@@ -34,7 +34,7 @@ Future<String> uploadAudioFile(String filePath) async {
 }
 
 Future<Map<dynamic, dynamic>> getAnalysis() async {
-  var uri = Uri.parse('http://192.168.254.156:5000/get_analysis');
+  var uri = Uri.parse('http://192.168.1.112:5000/get_analysis');
   final response = await http.get(uri);
 
   Map<dynamic, dynamic> analysis = json.decode(response.body);

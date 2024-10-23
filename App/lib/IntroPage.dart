@@ -17,7 +17,7 @@ class IntroPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            const SizedBox(height: 210), // 調整上方間距
+            const SizedBox(height: 220), // 調整上方間距
             Center(
               child: Column(
                 children: [

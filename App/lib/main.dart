@@ -234,12 +234,12 @@ class _RecordingPageState extends State<RecordingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xFFa1c4fd),
+        backgroundColor: const Color(0xFFfff09a),
       ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFFa1c4fd), Color(0xFFc2e9fb)],
+            colors: [Color(0xFFfff09a), Color(0xFFfaff9a)],//大背景
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -263,7 +263,7 @@ class _RecordingPageState extends State<RecordingPage> {
                 Container(
                   padding: const EdgeInsets.all(20.0),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFE9F9FF),
+                    color: const Color(0xFFFFFFFF),
                     borderRadius: BorderRadius.circular(20.0),
                     boxShadow: [
                       BoxShadow(
