@@ -6,13 +6,15 @@ from tensorflow.keras.models import load_model
 from process import  load_recorded
 from glob import glob
 import pandas as pd
+import socket
 app = Flask(__name__)
 
 UPLOAD_FOLDER = f".\\app_voice\\"
 if not os.path.isdir(UPLOAD_FOLDER):
     os.mkdir(UPLOAD_FOLDER)
 
-host_ip = "192.168.254.156"
+hostname = socket.gethostname()
+host_ip = socket.gethostbyname(hostname)
 host_port = 5000
 
 @app.route('/app_voice', methods=['POST'])
