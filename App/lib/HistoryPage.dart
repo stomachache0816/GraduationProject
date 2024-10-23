@@ -2,18 +2,15 @@ import 'package:flutter/material.dart';
 
 class HistoryPage extends StatelessWidget {
   // Remove 'const' from the class definition
-   HistoryPage({super.key});
+  final List<dynamic> historyRecords;
+  const HistoryPage({super.key, required this.historyRecords});
 
   // 模擬的歷史紀錄數據
-  final List<Map<String, String>> _historyRecords = [
-    {'title': '今天是禮拜日', 'date': '2024/09/20', 'detail': '這是紀錄 1 的詳細內容。'},
-    {'title': '紀錄 2', 'date': '2024/09/21', 'detail': '這是紀錄 2 的詳細內容。'},
-    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
-    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
-    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
-    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
-    {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
-  ];
+  // final List<Map<String, String>> _historyRecords = [
+  //   {'title': '今天是禮拜日', 'date': '2024/09/20', 'detail': 'pinyin\nbopomofo'},
+  //   {'title': '紀錄 2', 'date': '2024/09/21', 'detail': '這是紀錄 2 的詳細內容。'},
+  //   {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
+  // ];
 
   // 彈出對話框來顯示詳細內容
   void _showDetailDialog(BuildContext context, String title, String detail) {
@@ -44,9 +41,9 @@ class HistoryPage extends StatelessWidget {
         backgroundColor: const Color(0xFFa1c4fd),
       ),
       body: ListView.builder(
-        itemCount: _historyRecords.length,
+        itemCount: historyRecords.length,
         itemBuilder: (context, index) {
-          final record = _historyRecords[index];
+          final record = historyRecords[index];
           return Card(
             margin: const EdgeInsets.all(10.0),
             child: ListTile(

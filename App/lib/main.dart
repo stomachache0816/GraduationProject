@@ -76,10 +76,11 @@ class _HomePageState extends State<HomePage> {
             right: 10,
             bottom: 330,
             child: GestureDetector(
-              onTap: () {
+              onTap: () async {
+                List<dynamic> historyRecords = await getHistory();
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => HistoryPage()),
+                  MaterialPageRoute(builder: (context) => HistoryPage(historyRecords: historyRecords)),
                 );
               },
               child: Container(
