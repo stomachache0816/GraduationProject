@@ -5,12 +5,7 @@ class HistoryPage extends StatelessWidget {
   final List<dynamic> historyRecords;
   const HistoryPage({super.key, required this.historyRecords});
 
-  // 模擬的歷史紀錄數據
-  // final List<Map<String, String>> _historyRecords = [
-  //   {'title': '今天是禮拜日', 'date': '2024/09/20', 'detail': 'pinyin\nbopomofo'},
-  //   {'title': '紀錄 2', 'date': '2024/09/21', 'detail': '這是紀錄 2 的詳細內容。'},
-  //   {'title': '紀錄 3', 'date': '2024/09/22', 'detail': '這是紀錄 3 的詳細內容。'},
-  // ];
+  
 
   // 彈出對話框來顯示詳細內容
   void _showDetailDialog(BuildContext context, String title, String detail) {
